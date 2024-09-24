@@ -53,3 +53,49 @@
     top: -8px;
     right: -8px;
 }
+@media (max-width:1050px){
+    .navbar .logo{
+        width: 140px;
+    }
+    .navbar-menu{
+        gap: 20px;
+        font-size: 17px;
+    }
+    .right-navbar{
+        gap: 30px;
+    }
+    .right-navbar img{
+        width: 22px;
+    }
+    .right-navbar button{
+        padding: 8px 25px;
+    }
+}
+
+@media (max-width:900px){
+    .navbar .logo{
+        width: 110px;
+    }
+    .navbar-menu{
+        gap: 13px;
+        font-size: 14px;
+    }
+    .right-navbar{
+        gap: 20px;
+    }
+    .right-navbar img{
+        width: 18px;
+    }
+    .right-navbar button{
+        padding: 7px 19px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width:750px){
+   
+    .navbar-menu{
+       display: none;
+    }
+    
+}

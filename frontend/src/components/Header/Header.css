@@ -17,6 +17,7 @@
     animation: fadeIn 3s;
 }
 
+
 .header-contents h2{
     font-weight: 500;
     color: white;
@@ -34,4 +35,23 @@
     background-color: white;
     border-radius: 50px;
     font-size: max(1.2vw,13px);
+}
+@media (max-width:1050px){
+ 
+    .header-contents{
+        max-width: 40%;
+    }
+}
+
+@media (max-width:750px){
+   
+    .header-contents{
+        max-width: 55%;
+    }
+    .header-contents p{
+        display: none;
+    }
+    .header-contents button{
+        padding: 2vw 4vw;
+    }
 }
