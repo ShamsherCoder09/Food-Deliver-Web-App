@@ -19,3 +19,7 @@ hr{
   background-color: #a9a9a9;
   height: 1px;
 }
+
+.app-content{
+  display: flex;
+}
