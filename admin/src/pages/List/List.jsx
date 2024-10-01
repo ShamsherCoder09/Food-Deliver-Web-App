@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-function List() {
-  const url = "http://localhost:4000";
+function List({url}) {
+  // const url = "http://localhost:4000";
   const [list , setList] = useState([]);
   const fetchList = async()=>{
     const response = await axios.get(`${url}/api/food/list`);
