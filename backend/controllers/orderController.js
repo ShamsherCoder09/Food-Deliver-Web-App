@@ -1,8 +1,16 @@
 import orderModle from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import dotenv from 'dotenv'
+
+dotenv.config();
+
+// const STRIPE_SECRET_KEY="pk_test_51Q8w8HP9dGEptPxT74bif88w3jdQyHTUL7cxzFtNeLkTsuL6AGMHZt28plO593BwCysCldgBwCnOUK3dtmiH74BD00ai5yrdsE"
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// console.log("stripe secret key" , stripe)
 
 // placing order user for frontend
 const placeOrder = async(req,res)=>{
@@ -11,11 +19,13 @@ const placeOrder = async(req,res)=>{
         const newOrder = new orderModle({
             userId:req.body.userId,
             items:req.body.items,
-            amount:req.boyd.amount,
-            address:req.boyd.address
+            amount:req.body.amount,
+            address:req.body.address
         });
+        console.log(req.body.userId , "it is userID");
         await newOrder.save();
-        await userModel.findByIdAndUpdate(req.boyd.userId,{cartData:{}});
+        await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
+        console.log("user is updated")
 
         const line_items = req.body.items.map((item)=>({
             price_data:{
@@ -23,7 +33,7 @@ const placeOrder = async(req,res)=>{
                 product_data:{
                     name:item.name
                 },
-                unit_amount:item*100*80
+                unit_amount:item.price*100*80
             },
             quantity:item.quantity
         }))
@@ -58,4 +68,30 @@ const placeOrder = async(req,res)=>{
     }
 }
 
-export {placeOrder};
+const verifyOrder = async (req,res)=>{
+    const {success,orderId} = req.body;
+    try {
+        if(success=="true"){
+            await orderModle.findByIdAndUpdate(orderId,{payment:true})
+            res.json({
+                success:true,
+                message:"Paid"
+            })
+        }
+        else{
+            await orderModle.findByIdAndUpdate(orderId);
+            res.json({
+                success:false,
+                message:"Not Paid"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({
+            success:false,
+            message:"error in verify order , in orderController.js"
+        })
+    }
+}
+
+export {placeOrder,verifyOrder};
